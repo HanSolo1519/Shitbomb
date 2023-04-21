@@ -166,7 +166,7 @@
 		if(4) //Enclave
 			return list(ACCESS_ENCLAVE, ACCESS_ENCLAVE1, ACCESS_ENCLAVE2, ACCESS_ENCLAVE3, ACCESS_ENCLAVE4)
 		if(5) //Town
-			return list(ACCESS_TOWN, ACCESS_TOWN_CIV, ACCESS_TOWN_BAR, ACCESS_TOWN_MERCH, ACCESS_TOWN_PROSP, ACCESS_TOWN_SCIENCE, ACCESS_TOWN_DOC, ACCESS_TOWN_SEC, ACCESS_TOWN_HOS, ACCESS_TOWN_COMMAND, ACCESS_DEN)
+			return list(ACCESS_TOWN, ACCESS_TOWN_CIV, ACCESS_TOWN_BAR, ACCESS_TOWN_MERCH, ACCESS_TOWN_PROSP, ACCESS_TOWN_SCIENCE, ACCESS_TOWN_DOC, ACCESS_TOWN_SEC, ACCESS_TOWN_HOS, ACCESS_TOWN_COMMAND, ACCESS_DEN, ACCESS_TOWN_CMO)
 		if(6) //Wasteland
 			return list(ACCESS_PUBLIC, ACCESS_KHAN, ACCESS_TRIBE, ACCESS_RAIDER, ACCESS_WASTER)
 
@@ -391,6 +391,8 @@
 			return "Town Researcher Access"
 		if(ACCESS_TOWN_DOC)
 			return "Town Doctor Access"
+		if(ACCESS_TOWN_CMO)
+			return "Director Access"
 		if(ACCESS_TOWN_SEC)
 			return "Town Security Access"
 		if(ACCESS_TOWN_HOS)
@@ -493,7 +495,7 @@
 
 /* Eastwood */
 /proc/get_all_town_access()
-	return list(ACCESS_TOWN, ACCESS_TOWN_CIV, ACCESS_TOWN_BAR, ACCESS_TOWN_DOC, ACCESS_TOWN_SCIENCE, ACCESS_TOWN_MERCH, ACCESS_TOWN_PREACH, ACCESS_TOWN_HOS, ACCESS_TOWN_SEC)
+	return list(ACCESS_TOWN, ACCESS_TOWN_CIV, ACCESS_TOWN_BAR, ACCESS_TOWN_DOC, ACCESS_TOWN_SCIENCE, ACCESS_TOWN_MERCH, ACCESS_TOWN_PREACH, ACCESS_TOWN_HOS, ACCESS_TOWN_SEC, ACCESS_TOWN_CMO)
 
 /proc/get_town_access_desc(A)
 	switch(A)
@@ -513,21 +515,22 @@
 			return "Town Researcher Access"
 		if(ACCESS_TOWN_DOC)
 			return "Town Doctor Access"
+		if(ACCESS_TOWN_CMO)
+			return "Director Access"
 		if(ACCESS_TOWN_SEC)
 			return "Town Security Access"
 		if(ACCESS_TOWN_HOS)
 			return "Provost Marshal Access"
 
 /proc/get_all_jobs()
-	return list("Centurion", "NCR Captain", "Overseer", "Sheriff",
-				"Head Paladin", "Senior Paladin", "Paladin", "Knight-Captain", "Senior Knight", "Knight", "Head Scribe", "Senior Scribe", "Scribe", "Initiate",
-				"Veteran Decanus", "Vexillarius", "Decanus", "Veteran Legionnaire", "Prime Legionnaire",
-				"NCR Lieutenant", "NCR Sergeant", ,"NCR Corporal", "NCR Combat Medic", "NCR Combat Engineer", "NCR Trooper",
-				"NCR Veteran Ranger", "NCR Patrol Ranger", "NCR Recon Ranger",
-				"NCR Scout", "NCR Scout Sergeant", "NCR Scout Lieutenant",
-				"Chief of Security", "Vault-tec Doctor", "Vault-tec Scientist",
-				"Vault-tec Security", "Vault-tec Engineer", "Vault Dweller", "Settler",
-				"Wastelander", "Raider", "Great Khan", "Preacher", "Head Hunter", "Chief", "Shaman", "Villager", "Hunter")
+	return list("Legion Centurion", "NCR Captain", "Overseer", "Mayor",
+				"Head Paladin", "Senior Paladin", "Paladin", "Head Knight", "Senior Knight", "Knight", "Head Scribe", "Senior Scribe", "Scribe", "Initiate",
+				"Legion Orator", "Legion Vexillarius", "Legion Veteran Decanus", "Legion Prime Decanus", "Legion Recruit Decanus", "Legion Explorer", "Veteran Legionnaire", "Prime Legionnaire", "Recruit Legionnaire", "Camp Follower", "Legion Off-Duty",
+				"NCR Lieutenant", "NCR Medical Officer", "NCR Representative", "NCR Sergeant", "NCR Corporal", "NCR Combat Medic", "NCR Combat Engineer", "NCR Heavy Trooper", "NCR Trooper", "NCR Military Police", "NCR Off-Duty",
+				"NCR Veteran Ranger", "NCR Ranger",
+				"Provost Marshal", "Director", "Deputy Marshal",
+				"Detective", "Merchant", "Prospector", "Barkeeper", "Town Doctor", "Researcher", "Preacher", "Citizen",
+				"Wastelander", "Far-Lands Tribal", "Raider", "Great Khan", "Desperado Leader", "Desperado Enforcer")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")

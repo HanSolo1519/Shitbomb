@@ -70,7 +70,7 @@
 
 /datum/gear/shoes/romansandals
 	name = "roman sandals"
-	path = /obj/item/clothing/shoes/roman
+	path = /obj/item/clothing/shoes/sandals_leather
 
 /datum/gear/shoes/cowboy
 	name = "cowboy boots"
@@ -130,16 +130,16 @@
 	restricted_desc = "NCR"
 	restricted_roles = list("NCR Captain",
 							"NCR Lieutenant",
+							"NCR Medical Officer",
 							"NCR Veteran Ranger",
 							"NCR Ranger",
-							"NCR Lieutenant",
 							"NCR Heavy Trooper",
 							"NCR Sergeant",
 							"NCR Corporal",
 							"NCR Combat Engineer",
 							"NCR Combat Medic",
+							"NCR Military Police",
 							"NCR Trooper",
-							"NCR Rear Echelon",
 							"NCR Off-Duty"
 						)
 

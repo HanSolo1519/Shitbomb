@@ -244,7 +244,6 @@
 	active_power_usage = 600
 	visible_contents = FALSE
 	proj_pass_rate = 30
-	pass_flags = LETPASSTHROW
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	var/drying = FALSE
 
@@ -640,7 +639,6 @@
 	icon_state = "seedbin"
 	max_n_of_items = 400
 	proj_pass_rate = 70
-	pass_flags = LETPASSTHROW
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	var/climbable = TRUE
 
@@ -669,7 +667,6 @@
 	icon_state = "grownbin"
 	max_n_of_items = 1000
 	proj_pass_rate = 70
-	pass_flags = LETPASSTHROW
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 
 /obj/machinery/smartfridge/bottlerack/grownbin/accept_check(obj/item/O)
@@ -679,7 +676,7 @@
 
 
 //-------------------------
-// Alchemy Rack - Takes patches, primitive bottle, mourning dust, smelling salt
+// Alchemy Rack - Takes patches, primitive bottle, mourning dust, smelling salt, bitter drink, hydra
 //-------------------------
 /obj/machinery/smartfridge/bottlerack/alchemy_rack
 	name = "alchemy rack"
@@ -692,7 +689,9 @@
 		/obj/item/reagent_containers/pill/patch,
 		/obj/item/reagent_containers/glass/bottle/primitive,
 		/obj/item/stack/medical/mourning_dust,
-		/obj/item/smelling_salts
+		/obj/item/smelling_salts,
+		/obj/item/reagent_containers/pill/bitterdrink,
+		/obj/item/reagent_containers/pill/consumable,
 	))
 	if(is_type_in_typecache(O, alchemyrack_typecache))
 		return TRUE

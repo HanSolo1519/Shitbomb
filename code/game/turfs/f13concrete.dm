@@ -28,6 +28,7 @@ Concrete = Cement 1u + Water 2u + Silicon 7u
 
 /obj/item/stack/sheet/mineral/limestone
 	name = "limestone chunks"
+	icon = 'modular_atom/icons/stackable_items.dmi'
 	icon_state = "sheet-limestone"
 	singular_name = "limestone chunk"
 	layer = LOW_ITEM_LAYER
@@ -125,6 +126,7 @@ Concrete = Cement 1u + Water 2u + Silicon 7u
 
 /obj/item/stack/sheet/mineral/concrete
 	name = "concrete"
+	icon = 'modular_atom/icons/stackable_items.dmi'
 	icon_state = "sheet-concrete"
 	singular_name = "concrete"
 	layer = LOW_ITEM_LAYER
@@ -208,7 +210,7 @@ GLOBAL_LIST_INIT(concrete_recipes, list ( \
 	obj_integrity = 450
 	max_integrity = 450 //170 integ stronger than sandbags.
 	proj_pass_rate = 20
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 

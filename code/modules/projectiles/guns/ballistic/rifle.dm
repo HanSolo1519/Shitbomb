@@ -237,8 +237,8 @@
 	force = GUN_MELEE_FORCE_RIFLE_HEAVY
 	weapon_weight = GUN_TWO_HAND_ONLY
 	draw_time = GUN_DRAW_LONG
-	damage_multiplier = GUN_EXTRA_DAMAGE_0
-	init_recoil = RIFLE_RECOIL(3.6)
+	damage_multiplier = GUN_EXTRA_DAMAGE_T1
+	init_recoil = RIFLE_RECOIL(2.6)
 	gun_accuracy_zone_type = ZONE_WEIGHT_PRECISION
 
 	fire_sound = 'sound/f13weapons/brushgunfire.ogg'
@@ -587,10 +587,11 @@
 	init_recoil = HMG_RECOIL(3)
 	gun_accuracy_zone_type = ZONE_WEIGHT_PRECISION
 
+	gun_skill_check = null
 	init_firemodes = list(
 		SEMI_AUTO_SNIPER
 	)
-
+	
 	can_bayonet = FALSE
 	can_scope = FALSE
 	zoom_factor = 2
@@ -645,7 +646,7 @@
 /obj/item/gun/ballistic/rifle/mag/varmint/verminkiller
 	name = "verminkiller rifle"
 	desc = "Legends are told of the \"Ratslayer\", a custom-made souped-up varmint rifle with a sick paintjob. This is a pale imitation, made of chopped-up bits of other guns."
-	icon_state = "verminrifle"
+	icon_state = "ratslayer"
 	item_state = "ratslayer"
 
 	slowdown = GUN_SLOWDOWN_RIFLE_LIGHT_SEMI

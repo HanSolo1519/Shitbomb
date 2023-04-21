@@ -4,6 +4,7 @@ Mayor: ACCESS_TOWN_COMMAND 283
 Provost Marshal: ACCESS_TOWN_HOS 282
 Deputy, Detective: ACCESS_TOWN_SEC 281
 General access: ACCESS_TOWN 273
+Director: ACCESS_TOWN_CMO 287
 Doctor: ACCESS_TOWN_DOC 280
 Researcher: ACCESS_TOWN_SCIENCE 279
 Barkeeper: ACCESS_TOWN_BAR 275
@@ -51,7 +52,7 @@ here's a tip, go search DEFINES/access.dm
 	supervisors = "The Overseer"
 	description = "A subordinate of the Overseer, you are the primary face of the town. Handling the day to day dealings of the denizens of our fair city falls to you. Those wasters outside the walls are an unknown factor, so it falls to you to maintain relations with the Wastelands many players. Be wary of the Machine down below, as with the trades and treaties in place. Balance the budget, but don't step on the Merchant's toes. Organise defences, but do not encroach on the Marshal's office. Most of all: don't lose your head."
 	selection_color = "#af9172"
-	exp_requirements = 750
+	exp_requirements = 1500
 
 	outfit = /datum/outfit/job/eastwood/f13mayor
 	access = list(ACCESS_CLONING, ACCESS_CARGO_BOT, ACCESS_MINT_VAULT, ACCESS_MINING, ACCESS_FORENSICS_LOCKERS,ACCESS_ROBOTICS, ACCESS_TOWN_SEC, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_BAR, ACCESS_TOWN_CIV, ACCESS_TOWN_DOC, ACCESS_TOWN_PROSP, ACCESS_TOWN_PREACH, ACCESS_TOWN_MERCH, ACCESS_TOWN_SCIENCE, ACCESS_TOWN_COMMAND, ACCESS_CHANGE_IDS)
@@ -92,7 +93,8 @@ here's a tip, go search DEFINES/access.dm
 		/obj/item/pen/fountain/captain = 1,
 		/obj/item/clothing/mask/cigarette/cigar = 1,
 		/obj/item/toy/cards/deck/unum = 1,
-		/obj/item/ammo_box/magazine/pistol10mm = 3
+		/obj/item/ammo_box/magazine/pistol10mm = 3,
+		/obj/item/megaphone/command = 1
 		)
 
 /*--------------------------------------------------------------*/
@@ -111,7 +113,7 @@ here's a tip, go search DEFINES/access.dm
 	spawn_positions = 1
 	supervisors = "The Mayor and Overseer"
 	description = "As the head of the security forces, you are the face of justice in the town. Uphold the law, or bend it to suit your needs, you set the precedent for how justice is doled out in the town, so bear that in mind when you sentence that pickpocket to death. Maintain the armoury and keep that watchful eye on the elevator to the Vault below. Whatever you do, don't lose your head."
-	exp_requirements = 750
+	exp_requirements = 1500
 
 	outfit = /datum/outfit/job/eastwood/f13sheriff
 
@@ -135,7 +137,7 @@ here's a tip, go search DEFINES/access.dm
 	name = "Provost Marshal"
 	jobtype = /datum/job/eastwood/f13sheriff
 	id = /obj/item/card/id/dogtag/sheriff
-	ears = /obj/item/radio/headset/headset_town/lawman
+	ears = /obj/item/radio/headset/headset_town/lawman_sheriff
 	glasses  = /obj/item/clothing/glasses/sunglasses
 	neck = /obj/item/storage/belt/holster/leg
 	belt = /obj/item/storage/belt/military/army
@@ -202,7 +204,7 @@ here's a tip, go search DEFINES/access.dm
 	supervisors = "The Marshal, in his absence Mayor"
 	description = "You are part of a local police department as an officer of Eastwood, uphold laws and protect it's citizens whatever it takes. You are a subordinate of Marshal and in his absence Mayor, follow their orders as long as it doesn't endanger Eastwood or it's citizens."
 	selection_color = "#dcba97"
-	exp_requirements = 300
+	exp_requirements = 600
 
 	loadout_options = list(
 	/datum/outfit/loadout/vaultheavy,
@@ -341,6 +343,76 @@ here's a tip, go search DEFINES/access.dm
 		/obj/item/ammo_box/loader/m44=1
 		)
 
+/*--------------------------------------------------------------*/	
+//Town Director
+/*--------------------------------------------------------------*/
+
+/datum/job/eastwood/f13towncmo
+	title = "Director"
+	flag = F13CHIEFMED
+	display_order = JOB_DISPLAY_ORDER_F13CHIEFMED
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "The Mayor and Overseer"
+	description = "From the board of the VTCC, you were chosen to be the chief delegator for the medical and science wings of this town's clinic. You are the mediator of workplace drama, the human resource enforcer, and the cornerstone of inspiration for your underlings. As their supervisor, it is your job to make sure that this clinic functions at peak performance."
+	selection_color = "#af9172"
+	exp_requirements = 1500
+
+	outfit = /datum/outfit/job/eastwood/f13towncmo
+	access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC, ACCESS_TOWN_CMO, ACCESS_ROBOTICS)
+	minimal_access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC, ACCESS_TOWN_CMO, ACCESS_ROBOTICS)
+	matchmaking_allowed = list(
+		/datum/matchmaking_pref/friend = list(
+			/datum/job/eastwood
+		),
+		/datum/matchmaking_pref/rival = list(
+			/datum/job/eastwood
+		)
+	)
+
+/datum/outfit/job/eastwood/f13towncmo
+	name = "Director"
+	jobtype = /datum/job/eastwood/f13towncmo
+	id = /obj/item/card/id/f13towncmo
+	chemwhiz = TRUE
+	ears = /obj/item/radio/headset/headset_town/cmo
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
+	glasses = /obj/item/clothing/glasses/science
+	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	head = /obj/item/clothing/head/beret/cmo
+	suit_store = /obj/item/gun/energy/laser/complianceregulator
+	l_pocket = /obj/item/storage/bag/money/small/den
+	backpack_contents = list(
+		/obj/item/storage/pill_bottle/chem_tin/radx = 1,
+		/obj/item/reagent_containers/hypospray/medipen/stimpak=2,
+		/obj/item/megaphone/command = 1,
+		/obj/item/stock_parts/cell/ammo/ec = 2,
+		/obj/item/pda/medical = 1
+		)
+
+/datum/outfit/job/eastwood/f13towncmo/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	H.mind.teach_crafting_recipe(GLOB.chemwhiz_recipes)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/medx)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/medx/chemistry)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak/chemistry)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak5)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak5/chemistry)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/superstimpak)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/superstimpak5)
+	H.mind.teach_crafting_recipe(/datum/crafting_recipe/needler)
+	ADD_TRAIT(H, TRAIT_MEDICALGRADUATE, src)
+	ADD_TRAIT(H, TRAIT_GENERIC, src)
+	ADD_TRAIT(H, TRAIT_SURGERY_MID, src)
+	ADD_TRAIT(H, TRAIT_CHEMWHIZ, src)
+	ADD_TRAIT(H, TRAIT_CYBERNETICIST, src)
+	ADD_TRAIT(H, TRAIT_TECHNOPHREAK, src)
+	ADD_TRAIT(H, TRAIT_MEDICALEXPERT, src)
+	ADD_TRAIT(H, TRAIT_CYBERNETICIST_EXPERT, src)
+	ADD_TRAIT(H, TRAIT_SURGERY_HIGH, src)
 /*--------------------------------------------------------------*/
 //Researcher
 /*--------------------------------------------------------------*/
@@ -352,13 +424,13 @@ here's a tip, go search DEFINES/access.dm
 	display_order = JOB_DISPLAY_ORDER_RESEARCHER
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "The Mayor"
+	supervisors = "The Mayor and Director"
 	description =  "Scientist, Roboticist, each of you under the Vault's employ stands under the title of Researcher. The Vault's servers are regularly wiped by some glitch in the system, and it's down to the Scientists to restore these data files. Make sure to turn a profit on your services, or the Mayor might reconsider your position!"
 	selection_color = "#dcba97"
 
 	outfit = /datum/outfit/job/eastwood/f13denres
-	access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC)
-	minimal_access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC)
+	access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC, ACCESS_ROBOTICS)
+	minimal_access = list(ACCESS_TOWN_SCIENCE, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_DOC, ACCESS_ROBOTICS)
 	matchmaking_allowed = list(
 		/datum/matchmaking_pref/friend = list(
 			/datum/job/eastwood
@@ -408,7 +480,7 @@ here's a tip, go search DEFINES/access.dm
 	display_order = JOB_DISPLAY_ORDER_DENDOC
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "The Mayor"
+	supervisors = "The Mayor and Director"
 	description = "Doctor, the Medical Professionals, even those who handle quarantined patients, are the clinical cornerstone of the town, so long as the price is right. Just remember that you're no Follower (unless you somehow are) - medicine doesn't come for free, and you aren't here out of the kindness of your heart. Make sure to turn a profit on your services, or the Mayor might reconsider your position!"
 	selection_color = "#dcba97"
 
@@ -456,9 +528,6 @@ here's a tip, go search DEFINES/access.dm
 	if(visualsOnly)
 		return
 	H.mind.teach_crafting_recipe(GLOB.chemwhiz_recipes)
-	H.mind.teach_crafting_recipe(/datum/crafting_recipe/jet)
-	H.mind.teach_crafting_recipe(/datum/crafting_recipe/turbo)
-	H.mind.teach_crafting_recipe(/datum/crafting_recipe/psycho)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/medx)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/medx/chemistry)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak)
@@ -467,8 +536,6 @@ here's a tip, go search DEFINES/access.dm
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/stimpak5/chemistry)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/superstimpak)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/superstimpak5)
-	H.mind.teach_crafting_recipe(/datum/crafting_recipe/buffout)
-	H.mind.teach_crafting_recipe(/datum/crafting_recipe/steady)
 	H.mind.teach_crafting_recipe(/datum/crafting_recipe/needler)
 	ADD_TRAIT(H, TRAIT_MEDICALGRADUATE, src)
 	ADD_TRAIT(H, TRAIT_GENERIC, src)
@@ -513,7 +580,7 @@ here's a tip, go search DEFINES/access.dm
 	description = "Trade deals fall upon your shoulders to negotiate with those around the town, so ensure you never give more than you've got. Of course, selling the town is the worst thing you could do, so it should go without saying that you can't do that. Negotiate with the traders of the wastes, extort them for the shirt on their back, or set them up for life, it's up to you to decide."
 	enforces = "Your store is a private business and you can decide who is welcome there. However, you are still subject to the overarching laws of Eastwood."
 	selection_color = "#dcba97"
-	exp_requirements = 300
+	exp_requirements = 600
 
 	outfit = /datum/outfit/job/eastwood/f13shopkeeper
 	access = list(ACCESS_CARGO_BOT, ACCESS_TOWN_MERCH, ACCESS_PUBLIC, ACCESS_TOWN, ACCESS_TOWN_PROSP)
@@ -976,9 +1043,15 @@ here's a tip, go search DEFINES/access.dm
 	/obj/item/cultivator = 1,
 	/obj/item/reagent_containers/glass/bucket/plastic = 1,
 	/obj/item/storage/bag/plants/portaseeder= 1,
-	/obj/item/seeds/bamboo = 1,
-	/obj/item/seeds/apple/gold = 1,
-	/obj/item/seeds/cannabis = 1
+	/obj/item/seeds/ambrosia = 2,
+	/obj/item/seeds/tomato = 2,
+	/obj/item/seeds/wheat = 2,
+	/obj/item/seeds/corn = 2,
+	/obj/item/seeds/onion = 2,
+	/obj/item/seeds/soya = 2,
+	/obj/item/seeds/potato = 2,
+	/obj/item/seeds/sugarcane = 2,
+	/obj/item/seeds/olive = 2,
 	)
 
 /////////////////////
@@ -1006,7 +1079,7 @@ Roles should be limited and low since they should attempt to work within town ra
 	description = "You're a member of the local desperado gang, a group of chem-dealers, loan-sharkers and hitman from across the civilized wastes."
 	supervisors = "The Boss."
 	selection_color = "#df80af"
-	exp_requirements = 300
+	exp_requirements = 600
 	exp_type = EXP_TYPE_WASTELAND
 
 	outfit = /datum/outfit/job/wasteland/f13enforcer
@@ -1091,7 +1164,7 @@ Roles should be limited and low since they should attempt to work within town ra
 	description = "You are the leader of the local desperado gang, a gang of bandits, cattle-rustlers, hitmen, loan-sharkers and various other criminal activities. Luckily for you, you own the casino in town with your fellow 'buisness partners'. Make use of it, keep your men in line, and turn a profit. Be it working with the locals or against them."
 	supervisors = "Whatever god you pray to. The sky's the limit!"
 	selection_color = "#df80af"
-	exp_requirements = 500
+	exp_requirements = 1000
 	exp_type = EXP_TYPE_OUTLAW
 
 	outfit = /datum/outfit/job/wasteland/f13mobboss

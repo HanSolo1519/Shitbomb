@@ -16,7 +16,10 @@
 	icon_dead = "towercap-dead"
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	mutatelist = list(/obj/item/seeds/tower/steel)
-	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/oxygen = 0.05)
+	reagents_add = list(
+		/datum/reagent/cellulose = 0.05,
+		/datum/reagent/oxygen = 0.05
+		)
 
 /obj/item/seeds/tower/steel
 	name = "pack of steel-cap mycelium"
@@ -26,7 +29,11 @@
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05, /datum/reagent/oxygen = 0.1)
+	reagents_add = list(
+		/datum/reagent/cellulose = 0.05,
+		/datum/reagent/iron = 0.05,
+		/datum/reagent/oxygen = 0.1
+		)
 	rarity = 20
 
 /obj/item/grown/log
@@ -146,14 +153,13 @@
 
 /obj/structure/bonfire
 	name = "bonfire"
-	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
+	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things. Can be made safer by adding a sandstone circle."
 	icon = 'icons/fallout/objects/furniture/heating.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
-	pass_flags = LETPASSTHROW
 	pass_flags_self = PASSTABLE
 	var/burning = 0
 	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"

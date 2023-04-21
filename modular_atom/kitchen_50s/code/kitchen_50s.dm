@@ -29,7 +29,6 @@
 	icon_state = "choppingpin"
 
 	build_stage = 1
-	obj/item/reagent_containers/glass/bowl
 	completed = FALSE
 
 /obj/structure/chopping_block/update_icon()
@@ -343,8 +342,58 @@
 	name = "food preparation area"
 	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 	icon_state = "area_food_preparation"
+	grow_chance = 0
 
 /* Commented out since edite basefile anyways
 /obj/structure/closet/crate/bin/trashbin
 	icon = 'modular_atom/kitchen_50s/icons/icons_kitchen.dmi'
 */
+
+/obj/structure/bonfire/heater
+	name = "heating pyre"
+	desc = "For warming water before a bath or a shower."
+	density = TRUE
+	burn_icon = "bonfire_warm" // still a bit shitty, this whole sprite is subpar but too low prio atm
+	grill = TRUE
+	stones = TRUE
+
+/obj/structure/bonfire/heater/Initialize()
+	. = ..()
+	add_overlay("bonfire_grill")
+	add_overlay("bonfire_stones")
+
+/*
+GRILL TAKES COAL, COKE, NEW ANIMATION. See grill.dm
+/obj/machinery/grill
+	icon = 'modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
+	plane = MOB_PLANE
+	layer = ABOVE_MOB_LAYER
+
+CAMPFIRE POTBELLU STOVE NOW TAKES COAL, COKE; NEW ANIMATION, SOUNDS, GAUZE STERILIZE. See campfire.dm
+/obj/structure/campfire
+	var/datum/looping_sound/campfire/campfire_loop
+
+/obj/structure/campfire/stove
+	icon = 'modular_atom/kitchen_50s/icons/kitchen32x64.dmi'
+	plane = MOB_PLANE // so the smoke covers mobs
+	layer = ABOVE_MOB_LAYER // so the smoke covers mobs
+
+matchbox proc updated in boxes.dm
+*/
+
+/obj/item/reagent_containers/food/snacks/meat/steak/plated
+	name = "steak"
+	desc = "A plate with seasoned cooked meat."
+	icon_state = "meatsteak_plated"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6) // +1 when plated
+	foodtype = MEAT
+	tastes = list("meat" = 2, "salt" = 1)
+
+/datum/crafting_recipe/food/steak_plated
+	name = "Plated steak"
+	reqs = list(
+		/datum/reagent/consumable/sodiumchloride = 1,
+		/obj/item/reagent_containers/food/snacks/meat/steak = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/meat/steak/plated
+	subcategory = CAT_MEAT

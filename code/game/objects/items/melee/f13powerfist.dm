@@ -2,60 +2,55 @@
 // POWER FISTS //
 /////////////////		-Uses power (gas currently) for knockback. Heavy AP, specialized for attacking heavy armor
 
-// Power Fist			Throws targets. Max damage 44. Full AP.
-/obj/item/melee/powerfist/f13
+// Power Fist			Throws targets. Max damage 56.
+/obj/item/melee/unarmed/powerfist
 	name = "power fist"
 	desc = "A metal gauntlet with a piston-powered ram on top for that extra 'oomph' in your punch."
 	icon_state = "powerfist"
 	item_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	hitsound = 'sound/weapons/resonator_blast.ogg'
 	attack_speed = MELEE_SPEED_NORMAL
-	force = 22
+	var/click_cooldown = CLICK_CD_MELEE // Used for the wrenching component, sync this with attack_speed since this will overwrite it and be multiplied by power.
+	force = 28
+	armour_penetration = 0.35
 	throwforce = 10
 	throw_range = 3
+	sharpness = SHARP_NONE
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
+	slot_flags = ITEM_SLOT_GLOVES
 	flags_1 = CONDUCT_1
 	attack_verb = list("whacked", "fisted", "power-punched")
 	var/transfer_prints = TRUE //prevents runtimes with forensics when held in glove slot
 	var/throw_distance = 1
+	var/power = 1
+	var/knockback_anchored = FALSE
 
 
-/obj/item/melee/powerfist/f13/attackby(obj/item/W, mob/user, params)
+/obj/item/melee/unarmed/powerfist/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/knockback, throw_distance, FALSE, knockback_anchored)
+
+/obj/item/melee/unarmed/powerfist/attackby(obj/item/W, mob/user, params)
+	if(!power)
+		return
 	if(istype(W, /obj/item/wrench))
-		switch(fisto_setting)
+		switch(power)
 			if(1)
-				fisto_setting = 2
+				power = 2
 			if(2)
-				fisto_setting = 1
+				power = 1
+		if(GetComponent(/datum/component/knockback))
+			var/datum/component/knockback/KB = GetComponent(/datum/component/knockback)
+			KB.throw_distance = initial(throw_distance) * power
 		W.play_tool_sound(src)
-		to_chat(user, span_notice("You tweak \the [src]'s piston valve to [fisto_setting]."))
-		attack_speed = CLICK_CD_MELEE * fisto_setting
+		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [power].</span>")
+		force = initial(force) * power
+		attack_speed = click_cooldown * power
 
-/obj/item/melee/powerfist/f13/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
-	return
-
-/obj/item/melee/powerfist/f13/attack(mob/living/target, mob/living/user, attackchain_flags = NONE)
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
-		return FALSE
-	var/turf/T = get_turf(src)
-	if(!T)
-		return FALSE
-	var/totalitemdamage = target.pre_attacked_by(src, user)
-	target.apply_damage(totalitemdamage * fisto_setting, BRUTE, wound_bonus = -25*fisto_setting**2)
-	target.visible_message(span_danger("[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
-		span_userdanger("You cry out in pain as [user]'s punch flings you backwards!"))
-	new /obj/effect/temp_visual/kinetic_blast(target.loc)
-	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
-	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
-	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	target.throw_at(throw_target, 2 * throw_distance, 0.5 + (throw_distance / 2))
-	log_combat(user, target, "power fisted", src)
-
-// Goliath				Throws targets far. Max damage 50.
-/obj/item/melee/powerfist/f13/goliath
+// Goliath				Throws targets far. Max damage 62.
+/obj/item/melee/unarmed/powerfist/goliath
 	name = "Goliath"
 	desc = "A massive, experimental metal gauntlet crafted by some poor bastard in Redwater that since outlived their usefulness. The piston-powered ram on top is designed to throw targets very, very far."
 	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
@@ -67,11 +62,12 @@
 //	righthand_file = 'icons/fallout/onmob/weapons/melee1h_righthand.dmi'
 	icon_state = "goliath"
 	item_state = "goliath"
-	force = 25
+	force = 31
+	armour_penetration = 0.5 // It's a unique weapon and the throw distance is less of a blessing and more of a curse.
 	throw_distance = 3
 
 
-// Ballistic Fist			Keywords: Damage max 42, AP 0.45, Shotgun
+// Ballistic Fist			Keywords: Damage max 30 (this isn't a powerfist subtype), AP 0.45, Shotgun
 /obj/item/gun/ballistic/revolver/ballisticfist
 	name = "ballistic fist"
 	desc = "This powerfist has been modified to have two shotgun barrels welded to it, with the trigger integrated into the knuckle guard. For those times when you want to punch someone and shoot them in the face at the same time."
@@ -92,23 +88,60 @@
 
 
 // Mole Miner
-/obj/item/melee/powerfist/f13/moleminer
+/obj/item/melee/unarmed/powerfist/moleminer
 	name = "mole miner gauntlet"
 	desc = "A hand-held mining and cutting implement, repurposed into a deadly melee weapon.  Its name origins are a mystery..."
 	icon_state = "mole_miner_g"
 	item_state = "mole_miner_g"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 15
+	throw_distance = 5
 	throwforce = THROWING_POOR
 	throw_range = 7
 	attack_verb = list("slashed", "sliced", "torn", "ripped", "diced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
 	tool_behaviour = TOOL_MINING
 	var/digrange = 0
 	toolspeed = 0.4
 	sharpness = SHARP_EDGED
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
+
+
+// Displacer Glove 			20% more damage than the power fist for a max of 66. Throws targets. Great woundbonus.
+/obj/item/melee/unarmed/powerfist/displacer
+	name = "displacer glove"
+	desc = "A rare pre-war medical tool created with composite materials and plastics that uses sonic therapy to treat conditions like arrythmia. It appears to have been re-purposed as a weapon, with the sonic implement being overclocked to break bones inside a target."
+	icon_state = "displacer"
+	item_state = "displacer"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	force = 33
+	throw_distance = 1
+	wound_bonus = 40
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_GLOVES
+
+
+// Saturnite Fist 			10% less damage for a faster attack rate.
+/obj/item/melee/unarmed/powerfist/saturnite
+	name = "D-25A power fist"
+	desc = "A one-of-a-kind metal gauntlet made out of a mysterious alloy, the piston is branded 'Saturnite' and it feels lightweight and durable. It seems to have a system that redirects the center of mass of the glove to maximize thrust speed."
+	icon_state = "satfist"
+	item_state = "satfist"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	attack_speed = MELEE_SPEED_FASTEST
+	click_cooldown = CLICK_CD_RANGE
+	force = 25
+
+/obj/item/melee/unarmed/powerfist/saturnite/Touch(atom/target, proximity = TRUE) // Stealing this from the Bands of the North Star, probably wont work since these aren't a glove subtype
+	if(!isliving(target))
+		return
+
+	var/mob/living/M = loc
+	M.SetNextAction(CLICK_CD_RANGE) // 0.5 seconds?? a 40% increase i think
+
+	return NO_AUTO_CLICKDELAY_HANDLING | ATTACK_IGNORE_ACTION
 
 
 /////////////////////
@@ -118,7 +151,7 @@
 // Ripper				Keywords: Damage 10/45, Wound bonus, block
 /obj/item/melee/powered/ripper
 	name = "ripper"
-	desc = "The Ripper™ vibroblade is powered by a small energy cell wich allows it to easily cut through flesh and bone."
+	desc = "The Ripper™ vibroblade is powered by a small energy cell which allows it to easily cut through flesh and bone."
 	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi'
 	mob_overlay_icon = 'modular_atom/legio_invicta/icons/beltslot.dmi'
 	righthand_file = 'modular_atom/legio_invicta/icons/onmob_legion_righthand.dmi'

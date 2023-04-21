@@ -644,7 +644,12 @@
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
-		W.matchignite()
+		if(prob(40))
+			playsound(src, 'sound/f13items/matchstick_hit.ogg', 80, TRUE)
+			return
+		else
+			W.matchignite()
+			playsound(src, 'sound/f13items/matchstick_lit.ogg', 80, TRUE)
 
 /obj/item/storage/box/lights
 	name = "box of replacement bulbs"
@@ -1407,8 +1412,8 @@ list(/obj/item/stack/sheet/metal = 20,
 	new /obj/item/weldingtool(src)
 
 /obj/item/storage/box/shopkeeper
-	name = "Shopkeeper's blueprints"
-	desc = "a box of the shopkeeper's blueprints"
+	name = "merchant's blueprints"
+	desc = "a box of the merchant's blueprints"
 
 
 /obj/item/storage/box/shopkeeper/PopulateContents()

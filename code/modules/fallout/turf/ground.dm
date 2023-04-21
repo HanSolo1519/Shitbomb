@@ -164,16 +164,14 @@
 						/obj/item/stack/crafting/metalparts/five = 30,
 						/obj/item/stack/crafting/goodparts/five = 30,
 						/obj/item/stack/ore/blackpowder/twenty = 10,
-						/obj/effect/spawner/lootdrop/f13/weapon/gun/ballistic/mid = 3,
-						/obj/effect/spawner/lootdrop/f13/weapon/gun/ballistic/low = 3
 						)
 
 //For sculpting with more precision, the random picking does not work very well. Slowdown 0.5 instead of 1. No random armor or gunpowder or titanium. Use directions for control. - Pebbles
 /turf/open/indestructible/ground/outside/desert/sonora
-	icon = 'icons/fallout/turfs/wasteland.dmi'
+	icon = 'modular_atom/icons/tileset_sonora.dmi'
 	icon_state = "desertsmooth"
 	slowdown = 0.3
-	list/loots = list(
+	loots = list(
 						/obj/item/stack/crafting/metalparts/five = 30,
 						)
 	footstep = FOOTSTEP_LOOSE_SAND
@@ -203,28 +201,6 @@
 		salvage = new derp()
 	if(icon_state != "wasteland")
 		icon_state = "wasteland[rand(1,31)]"
-	for(var/direction in GLOB.cardinals)
-		var/turf/turf_to_check = get_step(src, direction)
-		if(istype(turf_to_check, /turf/open/water))
-			var/obj/effect/overlay/desert_side/DS = new /obj/effect/overlay/desert_side(src)
-			switch(direction)
-				if(NORTH)
-					DS.pixel_y = 32
-				if(SOUTH)
-					DS.pixel_y = -32
-				if(EAST)
-					DS.pixel_x = 32
-				if(WEST)
-					DS.pixel_x = -32
-			DS.dir = dir = turn(direction, 180)
-
-/turf/open/indestructible/ground/outside/desert/harsh/Initialize()
-	. = ..()
-	if(prob(2))
-		var/obj/derp = pickweight(loots)
-		salvage = new derp()
-	if(icon_state != "wasteland")
-		icon_state = "wasteland[rand(1,31)]"
 
 /obj/effect/overlay/desert_side
 	name = "desert"
@@ -236,15 +212,6 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE
-
-// Two edge smootheners for the new desert turf
-/obj/effect/overlay/desert/sonora/edge
-	name = "desert edge"
-	icon = 'icons/fallout/turfs/wasteland.dmi'
-	icon_state = "desertedge"
-
-/obj/effect/overlay/desert/sonora/edge/corner
-	icon_state = "desertcorner"
 
 /turf/open/indestructible/ground/outside/desert/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return //I mean, it makes sense that deserts don't get slippery, I guess... :(
@@ -390,14 +357,14 @@
 	AM.water_act(5)
 	..()
 
-/turf/open/indestructible/ground/outside/water/Exited(atom/movable/AM, atom/newloc)
+/turf/open/indestructible/ground/outside/water/Exited(atom/movable/AM)
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
 		L.update_water()
 		if(L.check_submerged() <= 0)
 			return
-		if(!istype(newloc, /turf/open/indestructible/ground/outside/water))
-			to_chat(L, span_warning("You climb out of \the [src]."))
+		if(prob(5))
+			to_chat(L, span_warning("You trudge through \the [src]."))
 	..()
 
 /turf/open/indestructible/ground/outside/water/update_icon()
@@ -550,7 +517,7 @@
 /turf/open/indestructible/ground/outside/gravel
 	name = "gravel"
 	icon_state = "gravel"
-	icon = 'icons/fallout/turfs/gravel.dmi'
+	icon = 'modular_atom/icons/tileset_gravel.dmi'
 	footstep = FOOTSTEP_GRAVEL
 	barefootstep = FOOTSTEP_GRAVEL
 	clawfootstep = FOOTSTEP_GRAVEL
@@ -583,11 +550,3 @@
 	name = "gravel path"
 	icon_state = "path_dirt_end"
 
-// Two edge smootheners for the new gravel turf
-/obj/effect/overlay/gravel/edge
-	name = "gravel edge"
-	icon = 'icons/fallout/turfs/gravel.dmi'
-	icon_state = "graveledge"
-
-/obj/effect/overlay/gravel/edge/corner
-	icon_state = "gravelcorner"

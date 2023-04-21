@@ -523,7 +523,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	name = "NCR Lieutenant"
 	icon_state = "NCR Lieutenant"
 
-obj/effect/landmark/start/f13/ncrlogisticsofficer
+/obj/effect/landmark/start/f13/ncrlogisticsofficer
 	name = "NCR Logistics Officer"
 	icon_state = "NCR Lieutenant"
 
@@ -597,7 +597,7 @@ obj/effect/landmark/start/f13/ncrlogisticsofficer
 	name = "Legion Orator"
 
 /obj/effect/landmark/start/f13/immune
-	name = "Legion Immune"
+	name = "Legion Off-Duty"
 
 /obj/effect/landmark/start/f13/decanvet
 	name = "Legion Veteran Decanus"
@@ -617,7 +617,7 @@ obj/effect/landmark/start/f13/ncrlogisticsofficer
 
 /obj/effect/landmark/start/f13/legionary
 	name = "Prime Legionnaire"
-	icon_state = "Veteran Legionnaire"
+	icon_state = "Legionary"
 
 /obj/effect/landmark/start/f13/decanrec
 	name = "Legion Recruit Decanus"
@@ -633,7 +633,8 @@ obj/effect/landmark/start/f13/ncrlogisticsofficer
 
 /obj/effect/landmark/start/f13/campfollower
 	name = "Camp Follower"
-	icon_state = "Legionary"
+	icon = 'modular_atom/legio_invicta/icons/icons_legion.dmi' // cause it just doesnt work in the base file, its weird but whatever.
+	icon_state = "Auxilia"
 
 /obj/effect/landmark/start/f13/slave
 	name = "Legion Slave"
@@ -658,7 +659,7 @@ obj/effect/landmark/start/f13/ncrlogisticsofficer
 	icon_state = "Paladin"
 
 /obj/effect/landmark/start/f13/knightcap
-	name = "Knight-Captain"
+	name = "Head Knight"
 	icon_state = "Knight"
 
 /obj/effect/landmark/start/f13/seniorknight
@@ -743,6 +744,9 @@ obj/effect/landmark/start/f13/ncrlogisticsofficer
 /obj/effect/landmark/start/f13/settler
 	name = "Citizen"
 	icon_state = "Settler"
+
+/obj/effect/landmark/start/f13/towncmo
+	name = "Director"
 
 /obj/effect/landmark/start/f13/dendoc
 	name = "Town Doctor"

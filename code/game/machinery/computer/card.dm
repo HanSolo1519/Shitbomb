@@ -524,6 +524,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		"Legate",
 		"Legion Centurion",
 		"Legion Veteran Decanus",
+		"Legion Orator"
 		)
 
 /obj/machinery/computer/card/enclave
@@ -555,7 +556,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		"Elder",
 		"Head Paladin",
 		"Head Scribe",
-		"Knight-Captain",
+		"Head Knight",
 		)
 
 /obj/machinery/computer/card/town
@@ -563,6 +564,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	circuit = /obj/item/circuitboard/computer/card/town
 	job_list = list(
 		"Provost Marshal",
+		"Director",
 		"Deputy Marshal",
 		"Detective",
 		"Researcher",

@@ -461,6 +461,19 @@
 	subcategory = CAT_WEAPON
 
 //Hobo Guns
+
+/datum/crafting_recipe/gun/zipgun
+	name = "Zip gun (9mm)"
+	result = /obj/item/gun/ballistic/automatic/hobo/zipgun
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/ammo_casing/c9mm = 5,
+				/obj/item/stack/crafting/metalparts = 1)
+	tools = list(TOOL_WORKBENCH)
+	time = 120
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/gun/pepperbox
 	name = "Pepperbox gun (10mm)"
 	result = /obj/item/gun/ballistic/revolver/hobo/pepperbox
@@ -491,6 +504,30 @@
 	/obj/item/stack/crafting/metalparts = 2,
 	/obj/item/stack/sheet/cloth = 1,
 	/obj/item/stack/sheet/mineral/wood = 2)
+	tools = list(TOOL_WORKBENCH)
+	time = 120
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/gun/knifegun
+	name = "Knife gun (.44)"
+	result = /obj/item/gun/ballistic/revolver/hobo/knifegun
+	reqs = list(/obj/item/scalpel = 1,
+				/obj/item/stack/rods = 1,
+				/obj/item/ammo_casing/m44 = 1,
+				/obj/item/restraints/handcuffs/cable = 1)
+	tools = list(TOOL_WORKBENCH)
+	time = 120
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/gun/knucklegun
+	name = "Knucklegun (.45)"
+	result = /obj/item/gun/ballistic/revolver/hobo/knucklegun
+	reqs = list(/obj/item/stack/sheet/metal = 5,
+				/obj/item/stack/rods = 4,
+				/obj/item/ammo_casing/c45 = 4,
+				/obj/item/stack/crafting/metalparts = 1)
 	tools = list(TOOL_WORKBENCH)
 	time = 120
 	category = CAT_WEAPONRY
@@ -647,18 +684,6 @@
 				/obj/item/stack/sheet/metal = 10)
 	tools = list(TOOL_WORKBENCH)
 	time = 300 //30 sec
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-	always_available = FALSE
-
-/datum/crafting_recipe/dks
-	name = "DKS Sniper Rifle"
-	result = /obj/item/gun/ballistic/automatic/sniper
-	reqs = list(/obj/item/stack/sheet/metal = 5,
-				/obj/item/advanced_crafting_components/receiver = 1,
-				/obj/item/advanced_crafting_components/assembly = 1,
-				/obj/item/stack/crafting/metalparts = 2)
-	time = 120
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 	always_available = FALSE
@@ -1124,7 +1149,7 @@
 	always_available = FALSE
 
 //sniper
-/datum/crafting_recipe/sniper
+/datum/crafting_recipe/dks
 	name = "DKS Sniper Rifle"
 	result = /obj/item/gun/ballistic/automatic/sniper
 	reqs = list(/obj/item/stack/sheet/metal = 5,
